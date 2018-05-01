@@ -16,8 +16,8 @@ import java.io.InputStream;
 
 public class StartupActivity extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 2000;
-    private GifImageView gifImageView;
+    private static int SPLASH_TIME_OUT = 2000; //Time for the Splash Screen to stay
+    private GifImageView gifImageView; //Declarartion of GIF
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,3 +43,4 @@ public class StartupActivity extends AppCompatActivity {
         },SPLASH_TIME_OUT);
     }
 }
+//END
