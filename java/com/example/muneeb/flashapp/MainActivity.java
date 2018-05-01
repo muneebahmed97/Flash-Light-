@@ -20,12 +20,12 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CameraManager cameraManager;
-    private String cameraID;
-    private Button btnOnOff;
-    private Boolean isTorchOn;
-    private MediaPlayer mediaPlayer;
-    private ImageView ivBulb;
+    private CameraManager cameraManager; //Calling the CameraManager to use it's functionalities
+    private String cameraID; //Setting the ID
+    private Button btnOnOff; //ON/OFF Button
+    private Boolean isTorchOn; //To check the Status of Flash
+    private MediaPlayer mediaPlayer; //To use some functionalities of MediaPlayer
+    private ImageView ivBulb; //ImageView to change the Images
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
         isTorchOn = false;
 
+        //Checking whether the device supports FLASH
         Boolean isFlashAvailable = getApplicationContext().getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
+        //If no Flash
         if (!isFlashAvailable) {
             AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
                     .create();
@@ -67,16 +69,17 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+        //Setting OnClickListener on the ON/OFF Button
             btnOnOff.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try {
-                        if (isTorchOn) {
-                            turnOffFlashLight();
+                        if (isTorchOn) { //If the flash is on 
+                            turnOffFlashLight(); //turn off the flash
                             isTorchOn = false;
                         } else {
-                            turnOnFlashLight();
-                            isTorchOn = true;
+                            turnOnFlashLight(); //If the flash is off, turn it on
+                            isTorchOn = true; 
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -84,7 +87,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
+/* 
+* ***
+* Creating a Function to Turn the Flash ON
+* ***
+*/
     public void turnOnFlashLight() {
 
         try {
@@ -98,14 +105,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+/* 
+* ***
+* Creating a Function to Turn the Flash OFF
+* ***
+*/
     public void turnOffFlashLight() {
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 cameraManager.setTorchMode(cameraID, false);
                 playOnOffSound();
-                ivBulb.setImageResource(R.drawable.darkbulb2);
+                ivBulb.setImageResource(R.drawable.darkbulb2); 
             }
 
         } catch (Exception e) {
@@ -113,6 +124,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+/* 
+* ***
+* Creating a Function to Play Sounds
+* ***
+*/
     private void playOnOffSound(){
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.light_switched_on);
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -150,3 +166,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+//END
